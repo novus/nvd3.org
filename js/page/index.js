@@ -55,7 +55,9 @@
   nv.addGraph(function() {  
     var chart = nv.models.lineChart()
                   .showLegend(false)
-                  .margin({top: 10, bottom: 30, left: 40, right: 10});
+                  .margin({top: 10, bottom: 30, left: 40, right: 10})
+                  .useInteractiveGuideline(true)
+                  ;
 
     chart.xAxis // chart sub-models (ie. xAxis, yAxis, etc) when accessed directly, return themselves, not the partent chart, so need to chain separately
         .tickFormat(d3.format(',r'));
@@ -87,6 +89,7 @@
                   .margin({top: 10, bottom: 30, left: 40, right: 10})
                   .showControls(false)
                   .showLegend(false)
+                  .useInteractiveGuideline(true)
                   .style('stream');
 
       chart.yAxis
@@ -124,6 +127,7 @@
                   .margin({top: 10, bottom: 30, left: 40, right: 10})
                   .showControls(false)
                   .showLegend(false)
+                  .useInteractiveGuideline(true)
                   .style('stacked');
 
       chart.yAxis
