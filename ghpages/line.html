@@ -5,7 +5,7 @@
     <title>NVD3.js ::  Simple Line Chart</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="Bob Monteverde">
+    <meta name="author" content="Bob Monteverde, Robin Hu">
 
     <link href="../css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
@@ -16,11 +16,12 @@
     </style>
     <link href="../css/common.css" rel="stylesheet">
     <link href="../src/nv.d3.css" rel="stylesheet">
-    <link href="../css/syntax.css" rel="stylesheet">
+    <link href="../css/desert.css" rel="stylesheet">
 
-    <script src="../lib/d3.v2.js"></script>
+    <script src="../lib/d3.v3.js"></script>
     <script src="../lib/fisheye.js"></script>
     <script src="../nv.d3.js"></script>
+    <script src="../lib/prettify.js"></script>
 
     <script src="../js/data/stream_layers.js"></script>
 
@@ -44,7 +45,7 @@
     </script>
   </head>
 
-  <body>
+  <body class='with-3d-shadow with-transitions'>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -132,61 +133,28 @@
           <h2 id='simple_line_chart'>Simple Line Chart</h2>
 <div id='chart'>
   <svg style='height:500px'> </svg>
-</div><script src='line.js' type='text/javascript'> </script>
-<h3 id='source_code'>Source Code</h3>
-<div class='highlight'><pre><code class='js'><span class='lineno'> 1</span> <span class='nx'>nv</span><span class='p'>.</span><span class='nx'>addGraph</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span>  
-<span class='lineno'> 2</span>   <span class='kd'>var</span> <span class='nx'>chart</span> <span class='o'>=</span> <span class='nx'>nv</span><span class='p'>.</span><span class='nx'>models</span><span class='p'>.</span><span class='nx'>lineChart</span><span class='p'>();</span>
-<span class='lineno'> 3</span> 
-<span class='lineno'> 4</span>   <span class='nx'>chart</span><span class='p'>.</span><span class='nx'>xAxis</span>
-<span class='lineno'> 5</span>       <span class='p'>.</span><span class='nx'>axisLabel</span><span class='p'>(</span><span class='s1'>&#39;Time (ms)&#39;</span><span class='p'>)</span>
-<span class='lineno'> 6</span>       <span class='p'>.</span><span class='nx'>tickFormat</span><span class='p'>(</span><span class='nx'>d3</span><span class='p'>.</span><span class='nx'>format</span><span class='p'>(</span><span class='s1'>&#39;,r&#39;</span><span class='p'>));</span>
-<span class='lineno'> 7</span> 
-<span class='lineno'> 8</span>   <span class='nx'>chart</span><span class='p'>.</span><span class='nx'>yAxis</span>
-<span class='lineno'> 9</span>       <span class='p'>.</span><span class='nx'>axisLabel</span><span class='p'>(</span><span class='s1'>&#39;Voltage (v)&#39;</span><span class='p'>)</span>
-<span class='lineno'>10</span>       <span class='p'>.</span><span class='nx'>tickFormat</span><span class='p'>(</span><span class='nx'>d3</span><span class='p'>.</span><span class='nx'>format</span><span class='p'>(</span><span class='s1'>&#39;.02f&#39;</span><span class='p'>));</span>
-<span class='lineno'>11</span> 
-<span class='lineno'>12</span>   <span class='nx'>d3</span><span class='p'>.</span><span class='nx'>select</span><span class='p'>(</span><span class='s1'>&#39;#chart svg&#39;</span><span class='p'>)</span>
-<span class='lineno'>13</span>       <span class='p'>.</span><span class='nx'>datum</span><span class='p'>(</span><span class='nx'>sinAndCos</span><span class='p'>())</span>
-<span class='lineno'>14</span>     <span class='p'>.</span><span class='nx'>transition</span><span class='p'>().</span><span class='nx'>duration</span><span class='p'>(</span><span class='mi'>500</span><span class='p'>)</span>
-<span class='lineno'>15</span>       <span class='p'>.</span><span class='nx'>call</span><span class='p'>(</span><span class='nx'>chart</span><span class='p'>);</span>
-<span class='lineno'>16</span> 
-<span class='lineno'>17</span>   <span class='nx'>nv</span><span class='p'>.</span><span class='nx'>utils</span><span class='p'>.</span><span class='nx'>windowResize</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>d3</span><span class='p'>.</span><span class='nx'>select</span><span class='p'>(</span><span class='s1'>&#39;#chart svg&#39;</span><span class='p'>).</span><span class='nx'>call</span><span class='p'>(</span><span class='nx'>chart</span><span class='p'>)</span> <span class='p'>});</span>
-<span class='lineno'>18</span> 
-<span class='lineno'>19</span>   <span class='k'>return</span> <span class='nx'>chart</span><span class='p'>;</span>
-<span class='lineno'>20</span> <span class='p'>});</span>
-<span class='lineno'>21</span> 
-<span class='lineno'>22</span> 
-<span class='lineno'>23</span> 
-<span class='lineno'>24</span> 
-<span class='lineno'>25</span> <span class='cm'>/**************************************</span>
-<span class='lineno'>26</span> <span class='cm'> * Simple test data generator</span>
-<span class='lineno'>27</span> <span class='cm'> */</span>
-<span class='lineno'>28</span> 
-<span class='lineno'>29</span> 
-<span class='lineno'>30</span> <span class='kd'>function</span> <span class='nx'>sinAndCos</span><span class='p'>()</span> <span class='p'>{</span>
-<span class='lineno'>31</span>   <span class='kd'>var</span> <span class='nx'>sin</span> <span class='o'>=</span> <span class='p'>[],</span>
-<span class='lineno'>32</span>       <span class='nx'>cos</span> <span class='o'>=</span> <span class='p'>[];</span>
-<span class='lineno'>33</span> 
-<span class='lineno'>34</span>   <span class='k'>for</span> <span class='p'>(</span><span class='kd'>var</span> <span class='nx'>i</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span> <span class='nx'>i</span> <span class='o'>&lt;</span> <span class='mi'>100</span><span class='p'>;</span> <span class='nx'>i</span><span class='o'>++</span><span class='p'>)</span> <span class='p'>{</span>
-<span class='lineno'>35</span>     <span class='nx'>sin</span><span class='p'>.</span><span class='nx'>push</span><span class='p'>({</span><span class='nx'>x</span><span class='o'>:</span> <span class='nx'>i</span><span class='p'>,</span> <span class='nx'>y</span><span class='o'>:</span> <span class='nb'>Math</span><span class='p'>.</span><span class='nx'>sin</span><span class='p'>(</span><span class='nx'>i</span><span class='o'>/</span><span class='mi'>10</span><span class='p'>)});</span>
-<span class='lineno'>36</span>     <span class='nx'>cos</span><span class='p'>.</span><span class='nx'>push</span><span class='p'>({</span><span class='nx'>x</span><span class='o'>:</span> <span class='nx'>i</span><span class='p'>,</span> <span class='nx'>y</span><span class='o'>:</span> <span class='p'>.</span><span class='mi'>5</span> <span class='o'>*</span> <span class='nb'>Math</span><span class='p'>.</span><span class='nx'>cos</span><span class='p'>(</span><span class='nx'>i</span><span class='o'>/</span><span class='mi'>10</span><span class='p'>)});</span>
-<span class='lineno'>37</span>   <span class='p'>}</span>
-<span class='lineno'>38</span> 
-<span class='lineno'>39</span>   <span class='k'>return</span> <span class='p'>[</span>
-<span class='lineno'>40</span>     <span class='p'>{</span>
-<span class='lineno'>41</span>       <span class='nx'>values</span><span class='o'>:</span> <span class='nx'>sin</span><span class='p'>,</span>
-<span class='lineno'>42</span>       <span class='nx'>key</span><span class='o'>:</span> <span class='s1'>&#39;Sine Wave&#39;</span><span class='p'>,</span>
-<span class='lineno'>43</span>       <span class='nx'>color</span><span class='o'>:</span> <span class='s1'>&#39;#ff7f0e&#39;</span>
-<span class='lineno'>44</span>     <span class='p'>},</span>
-<span class='lineno'>45</span>     <span class='p'>{</span>
-<span class='lineno'>46</span>       <span class='nx'>values</span><span class='o'>:</span> <span class='nx'>cos</span><span class='p'>,</span>
-<span class='lineno'>47</span>       <span class='nx'>key</span><span class='o'>:</span> <span class='s1'>&#39;Cosine Wave&#39;</span><span class='p'>,</span>
-<span class='lineno'>48</span>       <span class='nx'>color</span><span class='o'>:</span> <span class='s1'>&#39;#2ca02c&#39;</span>
-<span class='lineno'>49</span>     <span class='p'>}</span>
-<span class='lineno'>50</span>   <span class='p'>];</span>
-<span class='lineno'>51</span> <span class='p'>}</span>
-</code></pre>
 </div>
+<script src='line.js' type='text/javascript'> </script>
+
+<h3>Features</h3>
+<ul>
+  <li>Ability to combine as many line series' as you want.</li>
+  <li>Tooltip which shows all visible series data.</li>
+  <li>Line transitions that happen when turning on/off series, and when resizing chart.</li>
+  <li>Can specify whether a series should be an area chart.</li>
+</ul>
+<h3 id='source_code'>Getting Started</h3>
+
+<pre class='prettyprint linenums'>
+</pre>
+
+<script type='text/javascript'>
+  d3.text("line.js","text/plain",function(err,text) {
+      d3.select("pre.prettyprint").text(text);
+      prettyPrint();
+  });
+</script>
+
 
           <div id="disqus_thread"></div>
 
