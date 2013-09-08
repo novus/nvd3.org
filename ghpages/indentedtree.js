@@ -1,4 +1,3 @@
-
 nv.addGraph(function() {
   var chart = nv.models.indentedTree()
                 .tableClass('table table-striped') //for bootstrap styling
