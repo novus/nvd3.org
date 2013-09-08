@@ -1,16 +1,25 @@
-
 nv.addGraph(function() {
   var chart = nv.models.scatterChart()
-                .showDistX(true)
+                .showDistX(true)    //showDist, when true, will display those little distribution lines on the axis.
                 .showDistY(true)
+                .transitionDuration(350)
                 .color(d3.scale.category10().range());
 
-  chart.xAxis.tickFormat(d3.format('.02f'))
-  chart.yAxis.tickFormat(d3.format('.02f'))
+  //Configure how the tooltip looks.
+  chart.tooltipContent(function(key) {
+      return '<h3>' + key + '</h3>';
+  });
 
+  //Axis settings
+  chart.xAxis.tickFormat(d3.format('.02f'));
+  chart.yAxis.tickFormat(d3.format('.02f'));
+
+  //We want to show shapes other than circles.
+  chart.scatter.onlyCircles(false);
+
+  var myData = randomData(4,40);
   d3.select('#chart svg')
-      .datum(randomData(4,40))
-    .transition().duration(500)
+      .datum(myData)
       .call(chart);
 
   nv.utils.windowResize(chart.update);
@@ -18,13 +27,9 @@ nv.addGraph(function() {
   return chart;
 });
 
-
-
-
 /**************************************
  * Simple test data generator
  */
-
 function randomData(groups, points) { //# groups,# points per group
   var data = [],
       shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
@@ -40,8 +45,8 @@ function randomData(groups, points) { //# groups,# points per group
       data[i].values.push({
         x: random()
       , y: random()
-      , size: Math.random()
-      //, shape: shapes[j % 6]
+      , size: Math.random()   //Configure the size of each scatter point
+      , shape: (Math.random() > 0.95) ? shapes[j % 6] : "circle"  //Configure the shape of each scatter point.
       });
     }
   }
