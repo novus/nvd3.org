@@ -60,7 +60,7 @@ function loadChart(chartName) {
     //d3.select(d3.select('#codeTabs .active a').attr('href'))
         //.classed('active', false);
     d3.select('#chartMarkup').classed('active',
-      d3.select('#codeTabs .active a').attr('href') == '#chartMarkup')
+      d3.select('#codeTabs .active a').attr('href').indexOf('#chartMarkup') !== -1)
 
   })
 
@@ -72,7 +72,7 @@ function loadChart(chartName) {
     //d3.select(d3.select('#codeTabs .active a').attr('href'))
         //.classed('active', true);
     d3.select('#chartData').classed('active',
-      d3.select('#codeTabs .active a').attr('href') == '#chartData')
+      d3.select('#codeTabs .active a').attr('href').indexOf('#chartData') !== -1)
   })
 
   d3.text(chartName + 'Chart.js', function(text) {
@@ -83,7 +83,7 @@ function loadChart(chartName) {
     //d3.select(d3.select('#codeTabs .active a').attr('href'))
         //.classed('active', true)
     d3.select('#chartCode').classed('active',
-      d3.select('#codeTabs .active a').attr('href') == '#chartCode')
+      d3.select('#codeTabs .active a').attr('href').indexOf('#chartCode') !== -1)
   })
 }
 
