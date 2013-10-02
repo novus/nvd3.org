@@ -1,5 +1,7 @@
 nv.addGraph(function() {
-  var chart = nv.models.lineChart();
+  var chart = nv.models.lineChart()
+        .useInteractiveGuideline(true)
+  ;
 
   chart.xAxis
       .axisLabel('Time (ms)')
